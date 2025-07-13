@@ -13,6 +13,7 @@ export default function PublicationListPage() {
 
   // console.log("Nilai variabel publications di PublicationListPage (dari Context):", publications);
 
+  
   const handleEdit = (pub) => {
     console.log("Mengedit publikasi:", pub);
     navigate(`/publications/edit/${pub.id}`); // <-- PASTIKAN BARIS INI TIDAK DIKOMENTARI DAN SUDAH BENAR
@@ -98,19 +99,25 @@ export default function PublicationListPage() {
                   />
                 </td>
                 <td className="px-6 py-4 text-center space-x-2">
-                  <button
-                    onClick={() => handleEdit(pub)}
-                    className="cursor-pointer font-medium text-white bg-amber-500 hover:bg-amber-600 transform transition-transform duration-200 hover:scale-105 px-4 py-2 rounded-lg text-xs"
-                  >
-                    Ubah
-                  </button>
-                  <button
-                    onClick={() => handleDelete(pub.id)}
-                    className="cursor-pointer font-medium text-white bg-red-500 hover:bg-red-600 transform transition-transform duration-200 hover:scale-105 px-4 py-2 rounded-lg text-xs"
-                  >
-                    Hapus
-                  </button>
-                </td>
+                <button
+                  onClick={() => handleEdit(pub)}
+                  className="cursor-pointer font-medium text-white bg-green-500 hover:bg-green-600 transform transition-transform duration-200 hover:scale-105 px-4 py-2 rounded-lg text-xs"
+                >
+                  Ubah
+                </button>
+                <button
+                  onClick={() => navigate(`/publications/view/${pub.id}`)}
+                  className="cursor-pointer font-medium text-white bg-blue-500 hover:bg-blue-600 transform transition-transform duration-200 hover:scale-105 px-4 py-2 rounded-lg text-xs"
+                >
+                  View
+                </button>
+                <button
+                  onClick={() => handleDelete(pub.id)}
+                  className="cursor-pointer font-medium text-white bg-red-500 hover:bg-red-600 transform transition-transform duration-200 hover:scale-105 px-4 py-2 rounded-lg text-xs"
+                >
+                  Hapus
+                </button>
+              </td>
               </tr>
             ))}
           </tbody>
