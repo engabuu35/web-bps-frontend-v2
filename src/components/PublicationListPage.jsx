@@ -101,22 +101,22 @@ export default function PublicationListPage() {
                 <td className="px-6 py-4 text-center space-x-2">
                 <button
                   onClick={() => handleEdit(pub)}
-                  className="cursor-pointer font-medium text-white bg-green-500 hover:bg-green-600 transform transition-transform duration-200 hover:scale-105 px-4 py-2 rounded-lg text-xs"
+                  className="font-medium text-white bg-[#FFA500] hover:bg-[#e69500] transition duration-200 px-4 py-2 rounded-lg text-xs"
                 >
                   Ubah
                 </button>
                 <button
                   onClick={() => navigate(`/publications/view/${pub.id}`)}
-                  className="cursor-pointer font-medium text-white bg-blue-500 hover:bg-blue-600 transform transition-transform duration-200 hover:scale-105 px-4 py-2 rounded-lg text-xs"
+                  className="font-medium text-white bg-[#1B5E20] hover:bg-[#145417] transition duration-200 px-4 py-2 rounded-lg text-xs"
                 >
                   View
                 </button>
                 <button
                   onClick={() => handleDelete(pub.id)}
-                  className="cursor-pointer font-medium text-white bg-red-500 hover:bg-red-600 transform transition-transform duration-200 hover:scale-105 px-4 py-2 rounded-lg text-xs"
+                  className="font-medium text-white bg-[#D81B60] hover:bg-[#c2185b] transition duration-200 px-4 py-2 rounded-lg text-xs"
                 >
                   Hapus
-                </button>
+    </button>
               </td>
               </tr>
             ))}
