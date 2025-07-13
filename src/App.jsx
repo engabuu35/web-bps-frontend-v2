@@ -1,6 +1,13 @@
 // src/App.jsx
 import React, { useContext } from "react";
-import { Routes, Route, Navigate, useLocation, useParams, useNavigate } from "react-router-dom"; // <-- PASTIKAN SEMUA INI ADA
+import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  useParams,
+  useNavigate,
+} from "react-router-dom"; // <-- PASTIKAN SEMUA INI ADA
 
 import Navbar from "./components/Navbar";
 import PublicationListPage from "./components/PublicationListPage";
@@ -12,19 +19,22 @@ import EditPublicationPage from "./components/EditPublicationPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./hooks/useAuth";
 import { PublicationContext } from "./context/PublicationContext"; // <-- PASTIKAN INI ADA
+import PublicationDetailPage from "./components/PublicationDetailPage"; //
 
 export default function App() {
   const location = useLocation();
   const { isAuthenticated } = useAuth();
   const { publications, editPublication } = useContext(PublicationContext);
 
-  const showAuthPages = location.pathname.startsWith('/login') || location.pathname.startsWith('/register');
+  const showAuthPages =
+    location.pathname.startsWith("/login") ||
+    location.pathname.startsWith("/register");
 
   return (
     <div className="bg-gray-100 min-h-screen font-sans">
       {!showAuthPages && <Navbar />}
 
-      <main className={`${showAuthPages ? '' : 'p-4 sm:p-6 lg:p-8'}`}>
+      <main className={`${showAuthPages ? "" : "p-4 sm:p-6 lg:p-8"}`}>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -45,16 +55,24 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-          {/* Rute untuk Edit Publikasi */}
           <Route
             path="/publications/edit/:id"
             element={
               <ProtectedRoute>
-                {/* Komponen pembantu untuk mengambil ID dan meneruskan props ke EditPublicationPage */}
-                <EditPublicationWrapper 
-                  publications={publications} 
-                  editPublication={editPublication} 
+                <EditPublicationWrapper
+                  publications={publications}
+                  editPublication={editPublication}
                 />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* ✅ Tambahkan ini */}
+          <Route
+            path="/publications/view/:id"
+            element={
+              <ProtectedRoute>
+                <PublicationDetailPage />
               </ProtectedRoute>
             }
           />
@@ -73,25 +91,27 @@ export default function App() {
 function EditPublicationWrapper({ publications, editPublication }) {
   const { id } = useParams();
   const navigate = useNavigate();
-  
+
   // Cari publikasi yang sesuai dari daftar publikasi yang tersedia
-  const publicationToEdit = publications ? publications.find(pub => pub.id === parseInt(id)) : null;
+  const publicationToEdit = publications
+    ? publications.find((pub) => pub.id === parseInt(id))
+    : null;
 
   const handleCancelEdit = () => {
-    navigate('/publications');
+    navigate("/publications");
   };
 
   const handleUpdatePublication = async (updatedPublication) => {
     try {
-      await editPublication(updatedPublication); 
-      alert('Publikasi berhasil diupdate!');
-      navigate('/publications');
+      await editPublication(updatedPublication);
+      alert("Publikasi berhasil diupdate!");
+      navigate("/publications");
     } catch (error) {
-      alert('Gagal mengupdate publikasi. Silakan coba lagi.');
+      alert("Gagal mengupdate publikasi. Silakan coba lagi.");
     }
   };
 
-  if (!publications) { 
+  if (!publications) {
     return (
       <div className="text-center py-10 text-gray-600">
         Memuat data publikasi...
@@ -99,7 +119,7 @@ function EditPublicationWrapper({ publications, editPublication }) {
     );
   }
 
-  if (!publicationToEdit) { 
+  if (!publicationToEdit) {
     return (
       <div className="text-center py-10 text-gray-600">
         Publikasi tidak ditemukan.
