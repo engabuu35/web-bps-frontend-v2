@@ -18,12 +18,12 @@ return (
 }
 
 return (
-<div className="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-8 text-center leading-tight">
+<div className="max-w-5xl mx-auto py-8 px-4 sm:px-6 lg:px-6">
+    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 text-center leading-snug">
     {publication.title}
     </h1>
 
-    <div className="flex flex-col lg:flex-row items-start gap-10 mb-12 bg-white p-6 rounded-xl shadow-lg">
+    <div className="flex flex-col lg:flex-row items-start gap-8 mb-10 bg-white p-6 rounded-xl shadow-lg">
     <img
         src={publication.coverUrl}
         alt={`Sampul ${publication.title}`}
