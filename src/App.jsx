@@ -67,7 +67,6 @@ export default function App() {
             }
           />
 
-          {/* ✅ Tambahkan ini */}
           <Route
             path="/publications/view/:id"
             element={
