@@ -113,7 +113,7 @@ export default function PublicationListPage() {
                 </button>
                 <button
                   onClick={() => handleDelete(pub.id)}
-                  className="font-medium text-white bg-[#D81B60] hover:bg-[#c2185b] transition duration-200 px-4 py-2 rounded-lg text-xs"
+                  className="font-medium text-white bg-[#D81B60] hover:bg-[#a31b0f] transition duration-200 px-4 py-2 rounded-lg text-xs"
                 >
                   Hapus
     </button>
