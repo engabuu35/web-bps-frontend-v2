@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FcGoogle } from 'react-icons/fc'; // Ikon Google
@@ -9,7 +9,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const { loginAction, error, isLoading, loginWithGoogle } = useAuth();
+  const { loginAction, loginWithGoogle, error, isLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -25,113 +25,77 @@ export default function LoginPage() {
 
   const handleGoogleLogin = async () => {
     try {
-      await loginWithGoogle(); // Anda harus buat fungsi ini di useAuth
+      await loginWithGoogle(); // Akan kamu buat di useAuth
       navigate('/publications');
     } catch (err) {
-      console.error('Google Login failed:', err);
+      console.error('Google login gagal:', err);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-400 via-teal-400 to-slate-600 p-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 sm:p-10">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-500 to-indigo-600">
+      <div className="w-full max-w-md bg-white rounded-xl shadow-2xl p-8 sm:p-10">
         <div className="text-center mb-8">
-          <img
-            src="https://s.stis.ac.id/logoBPS"
-            alt="BPS Logo"
-            className="h-20 w-20 mx-auto mb-4"
-          />
-          <h2 className="text-3xl font-bold text-gray-800">Selamat Datang</h2>
-          <p className="text-sm text-gray-500">Silakan login untuk mengakses data publikasi</p>
+          <img src="https://s.stis.ac.id/logoBPS" alt="BPS Logo" className="h-20 w-20 mx-auto mb-4" />
+          <h2 className="text-3xl font-extrabold text-gray-900">Selamat Datang!</h2>
+          <p className="mt-2 text-sm text-gray-600">Masuk untuk mengakses portal publikasi</p>
         </div>
 
         {error && (
-          <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-md text-sm text-center mb-4">
+          <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded text-sm text-center mb-4">
             <FontAwesomeIcon icon={faEyeSlash} className="mr-2" />
             {error}
           </div>
         )}
 
-        <form className="space-y-5" onSubmit={handleSubmit}>
-          <div>
-            <input
-              id="email-address"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              placeholder="Alamat Email"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={isLoading}
-            />
-          </div>
-
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Alamat Email"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:outline-none"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={isLoading}
+            required
+          />
           <div className="relative">
             <input
-              id="password"
-              name="password"
               type={showPassword ? 'text' : 'password'}
-              autoComplete="current-password"
-              required
               placeholder="Kata Sandi"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:outline-none"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               disabled={isLoading}
+              required
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-3 text-gray-500 hover:text-gray-700"
-              aria-label={showPassword ? 'Sembunyikan sandi' : 'Lihat sandi'}
+              className="absolute top-3 right-3 text-gray-500"
               disabled={isLoading}
             >
               <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
             </button>
           </div>
-
           <button
             type="submit"
+            className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold disabled:bg-indigo-300"
             disabled={isLoading}
-            className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition duration-300 disabled:bg-emerald-300"
           >
             {isLoading ? 'Memuat...' : 'Masuk'}
           </button>
         </form>
 
-        <div className="my-4 text-center text-sm text-gray-500">atau</div>
+        <div className="mt-6 text-center text-gray-600">atau</div>
 
-        {/* Tombol Login Google */}
         <button
           onClick={handleGoogleLogin}
+          className="mt-4 w-full py-3 flex items-center justify-center border border-gray-300 bg-white rounded-lg hover:bg-gray-100"
           disabled={isLoading}
-          className="w-full flex items-center justify-center py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-100 transition duration-200 disabled:opacity-50"
         >
-          <FcGoogle className="mr-3 text-xl" />
-          <span className="text-gray-700 font-medium">Masuk dengan Google</span>
+          <FcGoogle className="mr-2 text-xl" />
+          Masuk dengan Google
         </button>
-
-        <div className="mt-6 text-center text-sm text-gray-600">
-          <p>
-            Belum punya akun?{' '}
-            <Link
-              to="/register"
-              className="text-emerald-600 hover:underline font-medium"
-            >
-              Daftar
-            </Link>
-          </p>
-          <p className="mt-1">
-            <Link
-              to="/forgot-password"
-              className="text-emerald-600 hover:underline font-medium"
-            >
-              Lupa Kata Sandi?
-            </Link>
-          </p>
-        </div>
       </div>
     </div>
   );
