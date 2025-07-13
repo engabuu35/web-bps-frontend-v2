@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { FcGoogle } from 'react-icons/fc';
+import { faEye, faEyeSlash, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const { loginAction, loginWithGoogle, error, isLoading } = useAuth();
+  const { loginAction, error, isLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -20,15 +19,6 @@ export default function LoginPage() {
       navigate('/publications');
     } catch (err) {
       console.error('Login gagal:', err);
-    }
-  };
-
-  const handleGoogleLogin = async () => {
-    try {
-      await loginWithGoogle();
-      navigate('/publications');
-    } catch (err) {
-      console.error('Google login gagal:', err);
     }
   };
 
@@ -54,20 +44,31 @@ export default function LoginPage() {
         )}
 
         <form className="space-y-5" onSubmit={handleSubmit}>
-          <input
-            type="email"
-            placeholder="Alamat Email"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:outline-none"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={isLoading}
-            required
-          />
+          {/* Email Input with Icon */}
           <div className="relative">
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+              <FontAwesomeIcon icon={faEnvelope} />
+            </span>
+            <input
+              type="email"
+              placeholder="Alamat Email"
+              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:outline-none"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isLoading}
+              required
+            />
+          </div>
+
+          {/* Password Input with Icon and Toggle */}
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+              <FontAwesomeIcon icon={faLock} />
+            </span>
             <input
               type={showPassword ? 'text' : 'password'}
               placeholder="Kata Sandi"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:outline-none"
+              className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:outline-none"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               disabled={isLoading}
@@ -82,6 +83,7 @@ export default function LoginPage() {
               <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
             </button>
           </div>
+
           <button
             type="submit"
             className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold disabled:bg-indigo-300"
@@ -90,17 +92,6 @@ export default function LoginPage() {
             {isLoading ? 'Memuat...' : 'Masuk'}
           </button>
         </form>
-
-        <div className="mt-6 text-center text-gray-600 text-sm">atau</div>
-
-        <button
-          onClick={handleGoogleLogin}
-          className="mt-4 w-full py-3 flex items-center justify-center border border-gray-300 bg-white rounded-lg hover:bg-gray-100 transition-all"
-          disabled={isLoading}
-        >
-          <FcGoogle className="mr-2 text-xl" />
-          Masuk dengan Google
-        </button>
       </div>
     </div>
   );
